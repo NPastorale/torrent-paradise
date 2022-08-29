@@ -69,7 +69,7 @@ func addTorrent(db *sql.DB, torr Torrent, crawled map[string]bool) {
 	}
 }
 
-//todo https://rarbg.to/rssdd.php
+//todo https://rarbg.to/rssdd.php?category=44
 func CrawlYts() []Torrent {
 	fp := gofeed.NewParser()
 	feed, err := fp.ParseURL("https://yts.mx/rss/0/all/all/0")
