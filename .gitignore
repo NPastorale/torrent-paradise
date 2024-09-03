@@ -5,7 +5,6 @@ ipfs.html
 about.html
 copyright.html
 why.html
-generate-top-torrents
 import-magnetico-db/import-magnetico-db
 crawl-rss/crawl-rss
 seedleech/seedleech
@@ -14,3 +13,4 @@ spider/spider
 api/api
 *.txt
 vote-and-donate.html
+data.csv

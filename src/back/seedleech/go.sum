@@ -1,0 +1,6 @@
+github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
+github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/etix/goscrape v0.0.0-20180731120256-0265a7239aef h1:9JK9zOFcMiv7ZGTjwLMqP+HtPIBxKQAc6d7FkZl+DzA=
+github.com/etix/goscrape v0.0.0-20180731120256-0265a7239aef/go.mod h1:kAgResQP1iYTrEi40ehz9KQMDv/14kzYQu1WXzEbf/8=
+github.com/lib/pq v1.3.0 h1:/qkRGz8zljWiDcFvgpwUpwIAPu3r07TDvs3Rws+o/pU=
+github.com/lib/pq v1.3.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=

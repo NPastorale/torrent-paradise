@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=nextgen
+      - POSTGRES_USER=nextgen
+      - POSTGRES_DB=nextgen
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U nextgen -d nextgen'"]
+      interval: 1s
+      timeout: 1s
+      retries: 5
+      start_period: 1s
+  api:
+    build:
+      context: .
+      dockerfile: ./src/back/api/Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - api
+    volumes:
+      - ./src/front:/usr/share/nginx/html
+      - ./src/front/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  # crawl-rss:
+  #   build:
+  #     context: .
+  #     dockerfile: ./src/back/crawl-rss/Dockerfile
+  #   restart: always
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #       restart: true
+
+  magnetico-import:
+    build:
+      context: .
+      dockerfile: ./src/back/import-magnetico-db/Dockerfile
+    restart: no
+    command: ["data.csv"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+
+  seedleech:
+    build:
+      context: .
+      dockerfile: ./src/back/seedleech/Dockerfile
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
