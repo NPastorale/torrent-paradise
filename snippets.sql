@@ -23,11 +23,23 @@ SELECT pg_size_pretty(pg_total_relation_size('"<schema>"."<table>"'));
 SELECT reltuples::bigint AS estimate FROM pg_class where relname='mytable';
 
 --- create fulltext table
-DROP TABLE search;
-CREATE MATERIALIZED VIEW search AS select torrent.*, fresh.s as s, fresh.l as l, to_tsvector(replace(torrent.name, '.', ' ')) as vect from torrent inner join fresh on fresh.infohash = torrent.infohash;
+DROP MATERIALIZED VIEW search;
+
+CREATE MATERIALIZED VIEW search AS  select
+	torrent.*,
+    COALESCE(fresh.s, 0) AS s, 
+    COALESCE(fresh.l, 0) AS l,
+	to_tsvector(replace(torrent.name, '.', ' ')) as vect
+from torrent
+left join fresh
+	on fresh.infohash = torrent.infohash;
+
 create index vect_inx on search using gin(vect);
+
 create unique index uniq_ih on search (infohash);
+
 REFRESH MATERIALIZED VIEW fresh;
+
 REFRESH MATERIALIZED VIEW CONCURRENTLY search;
 
 CREATE INDEX "fetch_work_for_seedleech" on trackerdata (tracker, seeders, scraped);

@@ -10,7 +10,7 @@ COPY ./src/back/crawl-rss/*.go .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags '-extldflags "-static"' -o main .
 
-FROM scratch AS application
+FROM gcr.io/distroless/static-debian12 AS application
 
 COPY --from=build /app/main /main
 

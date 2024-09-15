@@ -66,7 +66,7 @@ func main() {
 		name = strings.ToLower(name)
 
 		//fmt.Printf("Ih %v name %v len %v added %v", infohash, name, length, added)
-		_, err = db.Exec("INSERT INTO torrent (infohash, name, length, added) VALUES ($1, $2, $3, $4)", infohash, name, length, added)
+		_, err = db.Exec("INSERT INTO torrent (infohash, name, length, added) VALUES ($1, $2, $3, $4) ON CONFLICT (infohash) DO UPDATE SET name = EXCLUDED.name, length = EXCLUDED.length, added = EXCLUDED.added;", infohash, name, length, added)
 		if err, ok := err.(*pq.Error); ok { //dark magic
 			if err.Code != "23505" {
 				log.Fatal(err)
