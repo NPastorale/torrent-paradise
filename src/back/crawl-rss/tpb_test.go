@@ -12,10 +12,10 @@ func TestCrawlTPB48hTop(t *testing.T) {
 	}
 	for i, torrent := range torrents {
 		if torrent.Length < 10 {
-			t.Error("bad length of torrent "+strconv.Itoa(i))
+			t.Error("bad length of torrent " + strconv.Itoa(i))
 		}
 		if len(torrent.Name) < 2 {
-			t.Error("weirdly short name of torrent "+strconv.Itoa(i))
+			t.Error("weirdly short name of torrent " + strconv.Itoa(i))
 		}
 	}
 }
